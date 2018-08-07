@@ -8,11 +8,12 @@ import (
 	//"github.com/kshmirko/radtran/libplot"
 	//"github.com/kshmirko/radtran/libprepare"
 	"github.com/kshmirko/radtran/librt3"
+	"runtime"
 	//"math"
 )
 
 func main() {
-
+	runtime.GOMAXPROCS(1)
 	// func NewSDistParams(npts, momdim, r0, r1, gamma, dens, mre, mim, wl) float64)
 	params := libmieadv.NewSDistParams(101,
 		60,
