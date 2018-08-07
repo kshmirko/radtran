@@ -24,14 +24,16 @@ import (
 )
 
 type SDistParams struct {
-	AerosolDistrParams
+	*AerosolDistrParams
 	mre, mim, Wl float64
 	momdim       int
 }
 
-func NewSDistParams(npts, momdim int, r0, r1, gamma, dens, mre, mim, wl float64) *SDistParams {
+func NewSDistParams(npts, momdim int,
+	r0, r1, gamma, dens, mre, mim, wl float64) *SDistParams {
+
 	return &SDistParams{
-		AerosolDistrParams: AerosolDistrParams{
+		AerosolDistrParams: &AerosolDistrParams{
 			npts:  npts,
 			r0:    r0,
 			r1:    r1,
@@ -43,6 +45,15 @@ func NewSDistParams(npts, momdim int, r0, r1, gamma, dens, mre, mim, wl float64)
 		Wl:     wl,
 		momdim: momdim,
 	}
+}
+
+func (sdp *SDistParams) SetRefIdx(mre, mim float64) {
+	sdp.mre = mre
+	sdp.mim = mim
+}
+
+func (sdp *SDistParams) SetWl(wl float64) {
+	sdp.Wl = wl
 }
 
 func MieSDist1(params *SDistParams) (ext, sca, asy, vol float64, pmom [][]float64, err error) {

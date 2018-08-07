@@ -9,7 +9,7 @@ import (
 )
 
 func TestSsrt(t *testing.T) {
-	a := libssrt.New(".scat_file048", 0.1, 0.9, 9.9, 0.532, 10)
+	a := libssrt.New(".scat_file048", 0.21, 0.937, 30, 0.532, 10)
 
 	theta := libmath.Linspace(0, 90, 101)
 

@@ -81,7 +81,7 @@ func (v *SSRTData) L1(tau, theta, phi float64) float64 {
 	uphi := math.Cos(phi)
 
 	ua := u*u0 + math.Sqrt(1.0-u*u)*math.Sqrt(1.0-u0*u0)*uphi
-	F1_i := libmath.Coef2phase(v.P1, ua) * 0.5 //Scale by 0.5 beacause ||F1_i|| = 2
+	F1_i := libmath.Coef2phase(v.P1, ua) //Scale by 0.5 beacause ||F1_i|| = 2
 
 	Ld := F1_i * u0 / (u0 - u) * (math.Exp(-tau/u0) - math.Exp(-tau/u)) / u0
 

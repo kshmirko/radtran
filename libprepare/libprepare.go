@@ -9,7 +9,11 @@ import (
 	"github.com/kshmirko/radtran/libmieadv"
 )
 
-func Prepare(layfname string, params *libmieadv.SDistParams, taua, taum, hpbl float64, alts []float64) (evans [][]float64) {
+func Prepare(layfname string,
+	params *libmieadv.SDistParams,
+	taua, taum, hpbl float64,
+	alts []float64) (evans [][]float64) {
+
 	ext, sca, _, _, pmom, err := libmieadv.MieSDist1(params)
 
 	if err != nil {
