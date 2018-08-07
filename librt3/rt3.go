@@ -91,6 +91,37 @@ func (rt *RT3Object) Prepare(taua, taum, hpbl float64) {
 	_ = libprepare.Prepare(rt.Layfile, rt.sdp, taua, taum, hpbl, alts)
 }
 
+func (rt *RT3Object) MakeScript() {
+	f, err := os.Create("cmdfile.dat")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	io.WriteString(f, fmt.Sprintf("%d\n", rt.NStokes))
+	io.WriteString(f, fmt.Sprintf("%d\n", rt.NGauss))
+	io.WriteString(f, fmt.Sprintf("%s\n", rt.QuadType))
+	io.WriteString(f, fmt.Sprintf("%d\n", rt.NAzimuth))
+	io.WriteString(f, fmt.Sprintf("%s\n", rt.Layfile))
+	io.WriteString(f, fmt.Sprintf("%s\n", rt.DeltaScaling))
+	io.WriteString(f, fmt.Sprintf("%d\n", rt.Source))
+	io.WriteString(f, fmt.Sprintf("%f\n", rt.SolFlux))
+	io.WriteString(f, fmt.Sprintf("%f\n", rt.Theta))
+	io.WriteString(f, fmt.Sprintf("%f\n", rt.GTemp))
+	io.WriteString(f, fmt.Sprintf("%s\n", rt.SurfType))
+	io.WriteString(f, fmt.Sprintf("%f\n", rt.GRefl))
+	io.WriteString(f, fmt.Sprintf("%f\n", rt.STemp))
+	io.WriteString(f, fmt.Sprintf("%f\n", rt.sdp.Wl))
+	io.WriteString(f, fmt.Sprintf("%s\n", rt.RadUnits))
+	io.WriteString(f, fmt.Sprintf("%s\n", rt.PolType))
+	io.WriteString(f, fmt.Sprintf("%d\n", rt.NOutputLayers))
+	io.WriteString(f, fmt.Sprintf("%d\n", rt.OutLayIdx))
+	io.WriteString(f, fmt.Sprintf("%d\n", rt.NOutAzi))
+	io.WriteString(f, fmt.Sprintf("%s\n", rt.OutFname))
+
+	f.Close()
+
+}
+
 func (rt *RT3Object) Run() *RT3Output {
 	cmd := exec.Command("./rt3")
 	stdin, err := cmd.StdinPipe()
@@ -111,6 +142,14 @@ func (rt *RT3Object) Run() *RT3Output {
 
 	defer stdin.Close()
 	defer stdout.Close()
+
+	//outC := make(chan string)
+	// copy the output in a separate goroutine so printing can't block indefinitely
+	//go func() {
+	//	var buf bytes.Buffer
+	//	io.Copy(&buf, stdout)
+	//	outC <- buf.String()
+	//}()
 
 	io.WriteString(stdin, fmt.Sprintf("%d\n", rt.NStokes))
 	io.WriteString(stdin, fmt.Sprintf("%d\n", rt.NGauss))

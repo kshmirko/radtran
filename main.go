@@ -28,14 +28,16 @@ func main() {
 	rt3par.SetSDistParams(params)
 	rt3par.Prepare(0.1, 0.0, 3.0)
 	rt3par.Theta = 30.0
-	ret := rt3par.Run()
+	rt3par.MakeScript()
+	fmt.Println("--===END===--")
+	//ret := rt3par.Run()
 
-	ret.PlotPolarization("pol.pdf")
-	ret.PlotIntensities("Int.pdf")
+	//ret.PlotPolarization("pol.pdf")
+	//ret.PlotIntensities("Int.pdf")
 
-	for i := 0; i < len(*(ret.Ang)); i++ {
-		fmt.Printf("%10.3f%10.3f\n", (*(ret.Ang))[i], (*(ret.I))[i])
-	}
+	//for i := 0; i < len(*(ret.Ang)); i++ {
+	//	fmt.Printf("%10.3f%10.3f\n", (*(ret.Ang))[i], (*(ret.I))[i])
+	//}
 
 	//	alts := libmath.Linspace(48, 0, 49)
 
