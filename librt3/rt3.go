@@ -4,7 +4,7 @@ package librt3
 // RT3 - Radiation transfer code
 
 import (
-	"bytes"
+	//"bytes"
 	"fmt"
 	"io"
 	"log"
@@ -112,13 +112,13 @@ func (rt *RT3Object) Run() *RT3Output {
 	defer stdin.Close()
 	defer stdout.Close()
 
-	outC := make(chan string)
+	//outC := make(chan string)
 	// copy the output in a separate goroutine so printing can't block indefinitely
-	go func() {
-		var buf bytes.Buffer
-		io.Copy(&buf, stdout)
-		outC <- buf.String()
-	}()
+	//go func() {
+	//	var buf bytes.Buffer
+	//	io.Copy(&buf, stdout)
+	//	outC <- buf.String()
+	//}()
 
 	io.WriteString(stdin, fmt.Sprintf("%d\n", rt.NStokes))
 	io.WriteString(stdin, fmt.Sprintf("%d\n", rt.NGauss))
@@ -141,8 +141,8 @@ func (rt *RT3Object) Run() *RT3Output {
 	io.WriteString(stdin, fmt.Sprintf("%d\n", rt.NOutAzi))
 	io.WriteString(stdin, fmt.Sprintf("%s\n", rt.OutFname))
 
-	out := <-outC
-	fmt.Print(out)
+	//out := <-outC
+	//fmt.Print(out)
 
 	cmd.Wait()
 
